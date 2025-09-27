@@ -1,0 +1,142 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>BlogsMine</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static 'main_style.css' %}">
+    </head>
+    <body>
+        <header>
+            <img src="{% static 'images/venkat_title.png' %}" alt="Venkat">
+            <h2>BlogMines</h2>
+            <ul id='tags'>
+                <li><a href="https://grvenkat40-portfolio.onrender.com/">My Profile</a></li>
+                <li><a href="{% url 'blogapp:contact_page' %}">Contact</a> </li>
+            </ul>
+        </header>
+
+        <section class="front" id='front'>
+            <div id='top_ele'>
+                <h1>Writing is the painting of the voice...</h1>
+            </div>
+            <select name="Menu" id="Menu_list" onchange="location = this.value;">
+                    <option value="">Select</option>
+                    <option value="#blogs-">View Blog</option>
+                    <option value="#about">About</option>
+                    <option value="#contact">Contact</option>
+                </select>
+                <a href='#section_head' id='blog_botton'>Make Blog</a>
+            </section>
+
+        <section class="section_head" id='section_head' >
+            <div id='_head' >
+                <h2 id="make_blog">Make your blogs👋</h2>
+            </div>
+            <div class="BlogForm">
+                <form method="post" action="" enctype="multipart/form-data">
+                    <label for="title">Title</label>
+                    <input type="text" name="title" placeholder="Title Name" required>
+                    <label for="description">Description</label>
+                    <textarea name="description" placeholder="description" required></textarea>
+                    <div id="buttons">
+                        <button type="submit">Submit</button>
+                        <button type="reset">Clear</button>
+                        <input type="file" name="fileInput" id="fileInput" accept="image/*" hidden required>
+                        <label for="fileInput" class="file-upload">📂 Choose Image</label>
+
+                    </div>
+                </form>
+                <a href="#blogs-" id="view">View blogs</a>
+
+            </div>
+            
+        </section>
+        <section class="blogs-" id="blogs-">
+            <h2>Blogs</h2>
+            <div class="blogs-grid">
+                {% if page_obj %}
+                    {% for post in page_obj %}
+                        <div class="blog-card">
+                            {% if post.img_url %}
+                                <img src="{{post.img_url}}" alt="Blog Image">
+                            {% comment %} {% else %}
+                                <img  src="{{}}" alt="Default Image"> {% endcomment %}
+                            {% endif %}
+                            <div id="title_des">
+                                <h3>{{ post.title }}</h3>
+                                <p>{{ post.content| truncatechars:150}}...<a href='{% url "blogapp:Detail_page" post.slug %}' >Read More</a></p>
+                            </div>
+                            <div id="small">
+                                <small>Posted on {{ post.created_at|date:"M d, Y" }}</small> 
+                                <small><span>{{post.category.name}}</span></small>
+                            </div>
+                            </div>
+                    {% endfor %}
+                {% else %}
+                    <h1 style="color:bisque;text-shadow: 0 0 10px rgb(0, 0, 0);">No post Available </h1>
+                {% endif %}
+            </div>
+        </section>
+
+        <div class="col-12 my-3">
+                {% if page_obj.has_other_pages %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination">
+                            {%if page_obj.has_previous%}
+                                <li class="page-item">
+                                    <a class="page-link" href="?page=1" aria-label="First">
+                                        <span aria-hidden="true">&laquo; first</span>
+                                    </a>
+                                </li>
+                                <li class="page-item">
+                                    <a class="page-link" href="?page={{page_obj.previous_page_number}}" aria-label="Previous">
+                                        <span aria-hidden="true">previous</span>
+                                    </a>
+                                </li>
+                            {%endif%} 
+                            <li class="page-item"><span class="page-link">Page {{page_obj.number}} of {{page_obj.paginator.num_pages}}.</span></li>
+                            {%if page_obj.has_next%}
+                            <li class="page-item" >
+                                <a class="page-link" href="?page={{page_obj.next_page_number}}" aria-label="Next">
+                                    <span aria-hidden="true">next</span>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{page_obj.paginator.num_pages}}" aria-label="Last">
+                                    <span aria-hidden="true">last &raquo;</span>
+                                </a>
+                            </li>
+                            {%endif%}
+                        </ul>
+                    </nav>
+                {%endif%}
+
+        </div>
+
+
+
+
+    
+    <footer>
+        <div class="foot">
+            <div id="logo">
+                <img src="{% static 'images/venkat_title.png' %}" alt="Venkat">
+            </div>
+            <div id='link'>
+                <p>&copy; 2025 BlogMines | Built by Venkat</p>
+                <ul class="footer-links">
+                    <li><a href="#section_head">Home</a></li>
+                    <li><a href="https://grvenkat40-portfolio.onrender.com/">Portfolio</a></li>
+                    <li><a href="{%url 'blogapp:contact_page' %}">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    </body>
+</html>

@@ -1,0 +1,40 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ posts.slug }}</title>
+    <link rel="stylesheet" href="{% static 'pageDetail.css' %}">
+</head>
+<body>
+    <div class="container">
+        <div class='post_page'>
+            <div class="img_div">
+                <img class='image' src="{{posts.img_url}}" alt="Blog Image">
+            </div>
+            <div class="related_posts">
+                <label for="related_post">Similar Posts:</label>
+                <select name="related_post" id="related_post" onchange="location = this.value;">
+                    {% for related_post in related_posts %}
+                        <option value="{% url 'blogapp:Detail_page' related_post.slug %}">
+                            {{ related_post.title }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <h1 class="title">{{ posts.title }}</h1>
+        <p class="meta">By {{ posts.Author }}</p>
+        <p class="meta">Category :{{ posts.category.name }}</p>
+        <p class="meta">By {{ posts.created_at|date:"M d, Y" }}</p>
+        {% if post.image %}
+            <img src="{{ posts.image.url }}" alt="{{ posts.title }}" class="post-image">
+        {% endif %}
+        <div class="content">
+            {{ posts.content|linebreaks }}
+        </div>
+
+        <a href="{% url 'blogapp:main_page' %}" class="back-link">← Back to Blogs</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,44 @@
+{% load static%}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Contact</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{% static "contact_style.css" %}">
+    </head>
+    <body>
+        <header>
+            <h2>Contact</h2>
+        </header>
+    
+        <p>👉 Your feedbacks keeps us on the top😊</p>
+
+        {% comment %} {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <script>
+                    alert('{{ messages[0] }}');
+                </script>
+            {% endif %}
+        {% endwith %} {% endcomment %}
+
+        <div class="contactForm">
+            <form method="post" action="">
+                {% csrf_token %}
+                <label for="name">User Name</label>
+                <input type="text" name="name" placeholder="Name" required>
+                <label for="e_mail">Email Id</label>
+                <input type="email" name="e_mail" placeholder="Id" required>
+                <label for="feedback">Feedback</label>
+                <textarea name="feedback"  placeholder="Feedback/Queries" required></textarea>
+                
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <a id="back" href="{% url 'blogapp:login_page' %}"><-Back</a>
+        
+    </body>
+</html>
