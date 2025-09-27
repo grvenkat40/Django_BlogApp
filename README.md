@@ -4,7 +4,7 @@
 **Django BlogApp** is a full-featured blogging platform built with **Django**, allowing users to create, read, update, and delete blog posts. It demonstrates core Django concepts including models, views, templates, forms, authentication, and admin management.
 
 ---
-<img src="images/home_page.png" alt="Blog Home Page" width="600"/>
+<img src=C:\Django\pyProject\blogapp\static\images\blog_main.png alt="Blog Home Page" width="600"/>
 
 
 
