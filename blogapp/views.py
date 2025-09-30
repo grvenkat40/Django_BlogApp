@@ -39,13 +39,11 @@ def main(request):
 def contact(request):
     if request.method == 'POST':
         form = FeedbackForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('success')  # or another page
-    else:
-        form = FeedbackForm()
+        
     
-    return render(request, 'contact.html', {'form': form})
+        return render(request, 'contact.html', {'form': form})
+    
+    return render(request, 'contact.html')
 
 
 
